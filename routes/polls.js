@@ -2,7 +2,10 @@ const express = require("express"),
     router = express.Router();
     
 const Poll = require('../models/poll.js')
-    
+
+
+
+// Index Route
 router.get('/', function(req, res){
     Poll.find({}, function(err, Polls) {
         if (err) {
@@ -12,7 +15,11 @@ router.get('/', function(req, res){
         }
     })
 });
-
+//New Route
+router.get('/new', function(req, res){
+    res.render('polls/new')
+});
+// Post Route
 router.post('/', function(req, res){
     
     var title = req.body.title,
@@ -28,6 +35,17 @@ router.post('/', function(req, res){
         } else {
             console.log(newlyCreated);
             res.redirect('/polls')
+        }
+    })
+});
+// Show Route
+router.get('/:id', function(req, res){
+    Poll.findById(req.params.id, function(err, poll){
+        if (err) {
+            console.log(err)
+            res.redirect('back')
+        } else {
+            res.render('../views/polls/show', {poll: poll});
         }
     })
 })

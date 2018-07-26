@@ -19,3 +19,6 @@ app.get('/', function(req, res){
 app.listen(process.env.PORT, function(){
     console.log("server started");
 })
+
+
+// Add restful routes
