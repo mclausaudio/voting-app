@@ -48,15 +48,40 @@ router.get('/:id', function(req, res){
 })
 //Update route - increases option count by 1
 router.put('/:id', function(req, res){
-             res.redirect('/posts/' + req.params.id)
-    console.log(req.params.id);
-    // Poll.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
-    //     if (err) {
-    //         console.log(err)
-    //     } else {
-    //         res.redirect('/posts/' + req.params.id)
-    //     }
-    // })
+var optionId = req.body.votedFor;
+var options;
+
+Poll.findById(req.params.id, function(err, poll){
+    if (err) {
+        console.log(err)
+    } else {
+        options = poll.options;
+        console.log(options)
+        options.forEach(function(option){
+            if (option._id == optionId) {
+                option.count+=1;
+                console.log(option)
+            }
+        })
+    }
+    Poll.findByIdAndUpdate(req.params.id, {options: options}, function(err, updatedPoll){
+        if (err) {
+            console.log(err)
+        } else {
+             res.redirect('/polls/' + req.params.id);    
+        }
+    })
+})
+
+
+// Poll.findByIdAndUpdate(req.params.id, options., function(err, updatedPoll){
+//     if(err){
+//         console.log(err)
+//     } else {
+//         res.redirect('/polls/' + req.params.id);
+//     }
+// })
+
 })
     
     
