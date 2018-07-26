@@ -1,9 +1,7 @@
 const express = require("express"),
     router = express.Router();
     
-const Poll = require('../models/poll.js')
-
-
+const Poll = require('../models/poll.js');
 
 // Index Route
 router.get('/', function(req, res){
@@ -17,16 +15,15 @@ router.get('/', function(req, res){
 });
 //New Route
 router.get('/new', function(req, res){
-    res.render('polls/new')
+    res.render('polls/new');
 });
-// Post Route
+// Post Route for New Poll
 router.post('/', function(req, res){
     
     var title = req.body.title,
-        option1 = req.body.option1,
-        option2 = req.body.option2;
+        options = req.body.options;
     
-    var newPoll = {title: title, option1: option1, option2: option2};
+    var newPoll = {title: title, options: options};
     
     Poll.create(newPoll, function(err, newlyCreated){
         if (err) {
@@ -40,7 +37,7 @@ router.post('/', function(req, res){
 });
 // Show Route
 router.get('/:id', function(req, res){
-    Poll.findById(req.params.id, function(err, poll){
+    Poll.findById(req.params.id).populate('options').exec(function(err, poll){
         if (err) {
             console.log(err)
             res.redirect('back')
@@ -49,7 +46,18 @@ router.get('/:id', function(req, res){
         }
     })
 })
-    
+//Update route - increases option count by 1
+router.put('/:id', function(req, res){
+             res.redirect('/posts/' + req.params.id)
+    console.log(req.params.id);
+    // Poll.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
+    //     if (err) {
+    //         console.log(err)
+    //     } else {
+    //         res.redirect('/posts/' + req.params.id)
+    //     }
+    // })
+})
     
     
 module.exports = router;

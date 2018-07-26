@@ -1,6 +1,21 @@
 <form action="/polls" method="POST">
     <input type="text" name="title" placeholder="Title of poll">
-    <input type="text" name="option1" placeholder="Option 1">
-    <input type="text" name="option2" placeholder="Option 2">
+    <div id="options">
+        <input type="text" name="options[0][text]" placeholder="Option 1">
+        <input type="text" name="options[1][text]" placeholder="Option 2">
+    </div>
+    <p class="button" onclick="addOption()">Add option</p>
     <button class="button expanded">Submit</button>
 </form>
+
+<script>
+var nextOptionIndex = 2;
+// var newOptionHTML = '<input type="text" name="options[' + nextOptionIndex + ']" placeholder="Option ' + nextOptionIndex + '">';
+
+var addOption = function() {
+    document.getElementById("options").innerHTML += '<input type="text" name="options[' + nextOptionIndex + '][text]" placeholder="Option ' + (nextOptionIndex + 1) + '">';
+    console.log(nextOptionIndex)
+    nextOptionIndex+=1;
+    console.log(nextOptionIndex)
+  }
+</script>

@@ -1,3 +1,20 @@
 <h1><%= poll.title %></h1>
-<h3><%= poll.option1 %></h3>
-<h3><%= poll.option2 %></h3>
+<% poll.options.forEach(function(option){ %>
+    <h3><%= option.text %> - Current count: <%=option.count %></h3>
+    <form action="/polls/<%= poll._id %>?_method=PUT" method="POST">
+        <button>VOTE</button>
+    </form>
+    
+    
+    
+    
+<% }); %>
+
+<script>
+var onVote = function() {
+    var vote = {
+        text: option,
+        count: {type: Number, default: 0}
+    }
+}
+</script>
