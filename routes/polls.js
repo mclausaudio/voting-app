@@ -37,12 +37,19 @@ router.post('/', function(req, res){
 });
 // Show Route
 router.get('/:id', function(req, res){
-    Poll.findById(req.params.id).populate('options').exec(function(err, poll){
+    Poll.findById(req.params.id, function(err, poll){
         if (err) {
             console.log(err)
             res.redirect('back')
         } else {
-            res.render('../views/polls/show', {poll: poll});
+            var optionData = [...poll.options];
+            console.log(optionData);
+            var optionArray = []
+            optionData.forEach(function(option){
+                optionArray.push([option.text, option.count]);
+            })
+            console.log(optionArray);
+            res.render('../views/polls/show', {poll: poll, optionArray: JSON.stringify(optionArray)})
         }
     })
 })

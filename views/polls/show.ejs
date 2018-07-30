@@ -1,6 +1,7 @@
 <% include ../partials/header %>
 
 
+
 <section class="text-center">
     <h1><%= poll.title %></h1>
     <% poll.options.forEach(function(option){ %>
@@ -15,23 +16,16 @@
 
 
 
-
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
+          var optionArray = <%- optionArray%>;
+    optionArray.unshift(["Option", "# of votes"]);
+        console.log(optionArray);
+        function drawChart() {
 
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
+        var data = google.visualization.arrayToDataTable(optionArray);
 
         var options = {
           title: '<%= poll.title %>'
