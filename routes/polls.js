@@ -43,13 +43,16 @@ router.get('/:id', function(req, res){
             res.redirect('back')
         } else {
             var optionData = [...poll.options];
-            console.log(optionData);
             var optionArray = []
+            var totalCount = 0;
             optionData.forEach(function(option){
+                totalCount += option.count;
                 optionArray.push([option.text, option.count]);
             })
-            console.log(optionArray);
-            res.render('../views/polls/show', {poll: poll, optionArray: JSON.stringify(optionArray)})
+
+            var topAnswer = findTopAnswer(optionData);
+
+            res.render('../views/polls/show', {poll: poll, optionArray: JSON.stringify(optionArray), totalCount: totalCount, topAnswer: topAnswer});
         }
     })
 })
@@ -90,6 +93,25 @@ Poll.findById(req.params.id, function(err, poll){
 // })
 
 })
-    
+
+
+
+let findTopAnswer = function(array) {
+    let leader = 0;
+    let answer = ""
+    array.forEach(function(option, i){
+        // if (option.count > leader && !option[i + 1].count) {
+            
+        // }
+        if (option.count > leader) {
+            leader = option.count;
+            answer = option.text;
+        }
+    });
+    console.log("from the function -- " + answer);
+    return answer;
+
+}
+ 
     
 module.exports = router;

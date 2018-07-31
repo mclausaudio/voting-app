@@ -4,17 +4,27 @@
 
 <section class="text-center">
     <h1><%= poll.title %></h1>
-    <% poll.options.forEach(function(option){ %>
-        <h3><%= option.text %> - Current count: <%=option.count %></h3>
-        <form action="/polls/<%= poll._id %>?_method=PUT" method="POST">
-            <button name="votedFor" value="<%= option._id %>">VOTE</button>
-        </form>
-    <% }); %>   
+    <h5>Total number of votes: <%= totalCount %></h5>
+    <h2>Top Answer:</h2>
+    <h4><%= topAnswer %></h4>
+
+    <div class="container">
+        <div class="row">
+        <div class="col-md-5">
+            <% poll.options.forEach(function(option){ %>
+                <h3><%= option.text %></h3>
+                 <h5>Current number of votes: <%=option.count %></h5>
+                <form action="/polls/<%= poll._id %>?_method=PUT" method="POST">
+                    <button name="votedFor" value="<%= option._id %>">VOTE</button>
+                </form>
+            <% }); %>     
+        </div>
+        <div class="col-md-6">
+            <div id="piechart" style="width: 600px; height: 400px;"></div>  
+        </div>
+        </div>
+    </div>
 </section>
-
-<div id="piechart" style="width: 900px; height: 500px;"></div>
-
-
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -28,7 +38,7 @@
         var data = google.visualization.arrayToDataTable(optionArray);
 
         var options = {
-          title: '<%= poll.title %>'
+        //   title: '<%= poll.title %>'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -36,5 +46,8 @@
         chart.draw(data, options);
       }
     </script>
+    
+
+
 
 <% include ../partials/footer %>
