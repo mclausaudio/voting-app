@@ -10,7 +10,7 @@
       </div>
     <div class="container">
         <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <% poll.options.forEach(function(option){ %>
                 <h3><%= option.text %></h3>
                  <h5>Current number of votes: <%=option.count %></h5>
@@ -19,6 +19,14 @@
                 </form>
             <% }); %>     
         </div>
+        <div>
+            <form action="/polls/<%= poll._id %>/newoption?_method=PUT" method="POST">
+                <h3>New Option</h3>
+                <input type="text" name="newOption" placeholder="New Option">
+                <button>Submit</button>
+            </form>
+        </div>
+        
         <div class="col-md-6">
             <div id="piechart" style="width: 600px; height: 400px;"></div>  
         </div>

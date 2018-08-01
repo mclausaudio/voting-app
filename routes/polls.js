@@ -3,6 +3,8 @@ const express = require("express"),
     
 const Poll = require('../models/poll.js');
 
+const middlewareObj = require('../middleware/auth.js');
+
 // Index Route
 router.get('/', function(req, res){
     Poll.find({}, function(err, Polls) {
@@ -14,11 +16,11 @@ router.get('/', function(req, res){
     })
 });
 //New Route
-router.get('/new', function(req, res){
+router.get('/new', middlewareObj.isLoggedIn, function(req, res){
     res.render('polls/new');
 });
 // Post Route for New Poll
-router.post('/', function(req, res){
+router.post('/', middlewareObj.isLoggedIn, function(req, res){
     
     var title = req.body.title,
         options = req.body.options;
@@ -57,11 +59,10 @@ router.get('/:id', function(req, res){
     })
 })
 //Update route - increases option count by 1
-router.put('/:id', function(req, res){
-var optionId = req.body.votedFor;
-var options;
-
-Poll.findById(req.params.id, function(err, poll){
+router.put('/:id', middlewareObj.isLoggedIn, function(req, res){
+    var optionId = req.body.votedFor;
+    var options;
+    Poll.findById(req.params.id, function(err, poll){
     if (err) {
         console.log(err)
     } else {
@@ -70,29 +71,48 @@ Poll.findById(req.params.id, function(err, poll){
         options.forEach(function(option){
             if (option._id == optionId) {
                 option.count+=1;
-                console.log(option)
             }
         })
     }
+    Poll.findByIdAndUpdate(req.params.id, {options: options}, function(err, updatedPoll){
+        if (err) {
+            console.log('we made it to find id and update but theres an error, check below:')
+            console.log(err);
+        } else {
+             res.redirect('/polls');
+        }
+    })
+})
+});
+//Update options to add new option
+router.put('/:id/newoption', middlewareObj.isLoggedIn, function(req, res){
+    console.log(req.body);
+    var newOption;
+    var options;
+    Poll.findById(req.params.id, function(err, poll){
+        if (err) {
+            console.log(err)
+        } else {
+            options = poll.options;
+            console.log("options -------- " + options);
+            newOption = {
+                text: req.body.newOption,
+                count: 1
+            }
+            console.log("newOption -------- " + JSON.stringify(newOption));
+            options.push(newOption);
+            console.log('The new options after pushing ------- ' + options);
+        }
+    })
     Poll.findByIdAndUpdate(req.params.id, {options: options}, function(err, updatedPoll){
         if (err) {
             console.log(err)
         } else {
              res.redirect('/polls/' + req.params.id);    
         }
-    })
+    });
 })
 
-
-// Poll.findByIdAndUpdate(req.params.id, options., function(err, updatedPoll){
-//     if(err){
-//         console.log(err)
-//     } else {
-//         res.redirect('/polls/' + req.params.id);
-//     }
-// })
-
-})
 
 
 
@@ -100,17 +120,12 @@ let findTopAnswer = function(array) {
     let leader = 0;
     let answer = ""
     array.forEach(function(option, i){
-        // if (option.count > leader && !option[i + 1].count) {
-            
-        // }
         if (option.count > leader) {
             leader = option.count;
             answer = option.text;
         }
     });
-    console.log("from the function -- " + answer);
     return answer;
-
 }
  
     

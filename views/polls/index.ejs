@@ -3,13 +3,17 @@
 
       <section class="bg-dark text-white">
       <div class="container text-center">
-        <h2 class="mb-4">Sign in to get started</h2>
-        <a class="btn btn-light btn-xl sr-button" href="http://startbootstrap.com/template-overviews/creative/">Sign In</a>
+        
+        <% if (!currentUser) { %>
+          <h2 class="mb-4">Sign in to get started</h2>
+          <a class="btn btn-light btn-xl sr-button mr-3" href="/login">Sign In</a>
+          <a class="btn btn-light btn-xl sr-button" href="/signup">Sign Up</a>       
+        <% } else { %>
+          <h2 class="mb-4">Welcome back, <%= currentUser.username %>!</h2>
+          <a class="btn btn-light btn-xl sr-button mr-3" href="/polls/new">Create New Poll</a>
+        <% } %>
       </div>
     </section>
-
-
-
     <section id="services">
       <div class="container">
         <div class="row">
@@ -43,7 +47,7 @@
           <div class="col-lg-8 mx-auto text-center">
             <h2 class="section-heading">Let's Get In Touch!</h2>
             <hr class="my-4">
-            <p class="mb-5">Votesy was created by Michael Claus in 2018.  You can check out more of his work on his website below.</p>
+            <p class="mb-5">Pollux was created by Michael Claus.  It was built using NodeJS, MongoDB, ExpressJS, and Bootstrap.  You can check out more of Michael's work on his website below.</p>
           </div>
         </div>
         <div class="row">
