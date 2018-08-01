@@ -1,13 +1,13 @@
 <% include ../partials/header %>
 
 
-
 <section class="text-center">
-    <h1><%= poll.title %></h1>
-    <h5>Total number of votes: <%= totalCount %></h5>
-    <h2>Top Answer:</h2>
-    <h4><%= topAnswer %></h4>
-
+      <div class="container text-center">
+        <h2 class="pt-3"><%= poll.title %></h2>
+        <h5>Total number of votes: <%= totalCount %></h5>
+        <h3>Top Answer:</h3>
+        <h4 class="pb-4"><%= topAnswer %></h4>
+      </div>
     <div class="container">
         <div class="row">
         <div class="col-md-5">

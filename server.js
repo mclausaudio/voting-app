@@ -16,7 +16,7 @@ app.use(methodOverride("_method"));
 app.use('/polls', pollRoutes);
 
 app.get('/', function(req, res){
-  res.redirect('/polls');
+  res.render('landing');
 })
 
 app.listen(process.env.PORT, function(){

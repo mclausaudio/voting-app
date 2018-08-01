@@ -1,75 +1,79 @@
 <% include ../partials/header %>
 
 
+      <section class="bg-dark text-white">
+      <div class="container text-center">
+        <h2 class="mb-4">Sign in to get started</h2>
+        <a class="btn btn-light btn-xl sr-button" href="http://startbootstrap.com/template-overviews/creative/">Sign In</a>
+      </div>
+    </section>
 
-    <header class="hero text-center">
-      <div class="overlay"></div>
+
+
+    <section id="services">
       <div class="container">
         <div class="row">
-          <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">Votetonometry</h1>
-          </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <div class="col-12 col-md-3 text-center">
-                  <button type="submit" class="btn btn-block btn-lg btn-primary">Create Poll</button>
-                </div>
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Current Polls</h2>
+            <hr class="my-4">
           </div>
         </div>
       </div>
-    </header>
-<a href="/polls/new">New Poll</a>
-    <section class="features-icons bg-light text-center">
+      
+      
+      
       <div class="container">
         <div class="row">
-          <div class="col-lg-4">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="icon-screen-desktop m-auto text-primary"></i>
+          <% polls.reverse().forEach(function(poll) { %>
+            <div class="col-lg-3 col-md-6 text-center">
+              <div class="service-box mt-5 mx-auto">
+                <i class="fa fa-4x fa-list-alt text-primary mb-3 sr-icons"></i>
+                <h3 class="mb-3"><%= poll.title %></h3>
+                <p class="text-muted mb-0"><a href="/polls/<%= poll._id %>" class="btn btn-primary">View</a></p>
               </div>
-              <h3>Fully Responsive</h3>
-              <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
             </div>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+    
+      <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading">Let's Get In Touch!</h2>
+            <hr class="my-4">
+            <p class="mb-5">Votesy was created by Michael Claus in 2018.  You can check out more of his work on his website below.</p>
           </div>
-          <div class="col-lg-4">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="icon-layers m-auto text-primary"></i>
-              </div>
-              <h3>Bootstrap 4 Ready</h3>
-              <p class="lead mb-0">Featuring the latest build of the new Bootstrap 4 framework!</p>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 ml-auto text-center">
+            <i class="fa fa-laptop fa-3x mb-2 sr-contact"></i>
+            <p>
+              <a href="#">www.michaelclaus.io</a>
+            </p>
           </div>
-          <div class="col-lg-4">
-            <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="icon-check m-auto text-primary"></i>
-              </div>
-              <h3>Easy to Use</h3>
-              <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
-            </div>
+          <div class="col-lg-4 mr-auto text-center">
+            <i class="fa fa-envelope-o fa-3x mb-2 sr-contact"></i>
+            <p>
+              <a href="mailto:mclausaudio@gmail.com">mclausaudio@gmail.com</a>
+            </p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Bootstrap core JavaScript -->
+    <!--<script src="vendor/jquery/jquery.min.js"></script>-->
+    <!--<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 
-<section class="text-center bg-light">
-  <div class="container polls">
-    <h3>Previous polls below</h3>
-    <% polls.reverse().forEach(function(poll) { %>
-        <div class="col-lg-3 polls-item border">
-          <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <h4><%= poll.title %></h4>
-            <a href="/polls/<%= poll._id %>" class="btn btn-primary">View</a>
-          </div>
-        </div>
-    <% }); %>
-  </div>
-</section>
+    <!-- Plugin JavaScript -->
+    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
+    <!--<script src="vendor/scrollreveal/scrollreveal.min.js"></script>-->
+    <!--<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>-->
 
+    <!-- Custom scripts for this template -->
+    <!--<script src="js/creative.min.js"></script>-->
 
-<div class="container-fluid text-center mx-auto">
-  <% include ../partials/footer %>
-</div>
-  
+  </body>
 
