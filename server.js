@@ -14,7 +14,9 @@ const User = require('./models/user.js'),
 const pollRoutes = require("./routes/polls.js"),
       authRoutes = require("./routes/auth.js");
 
-mongoose.connect('mongodb://localhost/voting-app');
+// mongodb://localhost/voting-app
+// mongodb://<dbuser>:<dbpassword>@ds111082.mlab.com:11082/pollux
+mongoose.connect('mongodb://mike:pollux415@ds111082.mlab.com:11082/pollux');
 
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({extended: true}));
