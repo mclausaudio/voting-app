@@ -22,9 +22,13 @@ router.get('/new', middlewareObj.isLoggedIn, function(req, res){
 // Post Route for New Poll
 router.post('/', middlewareObj.isLoggedIn, function(req, res){
     var title = req.body.title,
-        options = req.body.options;
+        options = req.body.options,
+        author = {
+            id: req.user._id,
+            username: req.user.username
+        }
     
-    var newPoll = {title: title, options: options};
+    var newPoll = {title: title, options: options, author: author};
     
     Poll.create(newPoll, function(err, newlyCreated){
         if (err) {
@@ -36,6 +40,18 @@ router.post('/', middlewareObj.isLoggedIn, function(req, res){
         }
     })
 });
+
+//Show all posts by user
+router.get('/mypolls', function(req, res) {
+    Poll.find({}, function(err, Polls){
+        if (err) {
+            console.log(err)
+        } else {
+            res.render('polls/mypolls', {polls: Polls});
+        }
+    })
+});
+
 // Show Route
 router.get('/:id', function(req, res){
     Poll.findById(req.params.id, function(err, poll){
@@ -57,6 +73,7 @@ router.get('/:id', function(req, res){
         }
     })
 });
+
 
 //Update options to add new option
 router.put('/newoption/:id', middlewareObj.isLoggedIn, function(req, res){
@@ -89,7 +106,7 @@ router.put('/newoption/:id', middlewareObj.isLoggedIn, function(req, res){
     });
 });
 //Update route - increases option count by 1
-router.put('/:id', middlewareObj.isLoggedIn, function(req, res){
+router.put('/:id', function(req, res){
     var optionId = req.body.votedFor;
     var options;
     Poll.findById(req.params.id, function(err, poll){
@@ -113,6 +130,18 @@ router.put('/:id', middlewareObj.isLoggedIn, function(req, res){
     })
 })
 });
+
+
+//DELETE route
+router.delete('/:id', middlewareObj.checkPollOwnership, function(req, res){
+    Poll.findByIdAndRemove(req.params.id, function(err){
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect('/polls');
+        }
+    })
+})
 
 
 

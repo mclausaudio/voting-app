@@ -1,37 +1,46 @@
-<% include ../partials/header %>
-
+<% include ../partials/header2 %>
 
 <section class="text-center">
-      <div class="container text-center">
+    <div class="poll-show-page">
+    <div class="container text-center">
         <h2 class="pt-3"><%= poll.title %></h2>
+        <h4>Created by: <%= poll.author.username %></h4>
         <h5>Total number of votes: <%= totalCount %></h5>
         <h3>Top Answer:</h3>
         <h4 class="pb-4"><%= topAnswer %></h4>
       </div>
+    <% if (currentUser && poll.author.id.equals(currentUser._id)) { %>
+        <form action="/polls/<%= poll._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-primary">Delete</button>
+        </form>
+    <% } %>
     <div class="container">
         <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 pb-5">
             <% poll.options.forEach(function(option){ %>
-                <h3><%= option.text %></h3>
-                 <h5>Current number of votes: <%=option.count %></h5>
-                <form action="/polls/<%= poll._id %>?_method=PUT" method="POST">
-                    <button name="votedFor" value="<%= option._id %>">VOTE</button>
-                </form>
+                <div class="pb-3">
+                    <h3 class="option-text"><%= option.text %></h3>
+                    <h5>Current number of votes: <%=option.count %></h5>
+                    <form action="/polls/<%= poll._id %>?_method=PUT" method="POST">
+                        <button class="btn btn-primary" name="votedFor" value="<%= option._id %>">VOTE</button>
+                    </form>
+                </div>
             <% }); %>     
+                <form action="/polls/newoption/<%= poll._id %>?_method=PUT" method="POST">
+                    <h3>New Option</h3>
+                    <input type="text" name="newOption" placeholder="New Option">
+                    <button class="btn btn-primary">Submit</button>
+                </form>
         </div>
-        <div>
-            <form action="/polls/newoption/<%= poll._id %>?_method=PUT" method="POST">
-                <h3>New Option</h3>
-                <input type="text" name="newOption" placeholder="New Option">
-                <button>Submit</button>
-            </form>
-        </div>
+
         
         <div class="col-md-6">
             <div id="piechart" style="width: 600px; height: 400px;"></div>  
         </div>
         </div>
     </div>
+    </div>
+
 </section>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -54,8 +63,6 @@
         chart.draw(data, options);
       }
     </script>
-    
-
 
 
 <% include ../partials/footer %>

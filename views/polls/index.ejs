@@ -3,10 +3,9 @@
 
       <section class="bg-dark text-white">
       <div class="container text-center">
-        
         <% if (!currentUser) { %>
           <h2 class="mb-4">Sign in to get started</h2>
-          <a class="btn btn-light btn-xl sr-button mr-3" href="/login">Sign In</a>
+          <a class="btn btn-light btn-xl sr-button mr-3" href="/login">Login</a>
           <a class="btn btn-light btn-xl sr-button" href="/signup">Sign Up</a>       
         <% } else { %>
           <h2 class="mb-4">Welcome back, <%= currentUser.username %>!</h2>
@@ -23,9 +22,6 @@
           </div>
         </div>
       </div>
-      
-      
-      
       <div class="container">
         <div class="row">
           <% polls.reverse().forEach(function(poll) { %>
@@ -40,14 +36,13 @@
         </div>
       </div>
     </section>
-    
       <section id="contact">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
             <h2 class="section-heading">Let's Get In Touch!</h2>
             <hr class="my-4">
-            <p class="mb-5">Pollux was created by Michael Claus.  It was built using NodeJS, MongoDB, ExpressJS, and Bootstrap.  You can check out more of Michael's work on his website below.</p>
+            <p class="mb-5">Pollux allows users to ask questions in the form of polls to find out what their team and friends are thinking.  To sign up, simply enter a valid username and password, no email needed!  Visitors do not need to create an account to vote on an existing poll.  Pollux was created by <a href="mailto:mclausaudio@gmail.com?subject=Pollux App">Michael Claus</a>.  It was built using NodeJS, MongoDB, ExpressJS, and Bootstrap.  You can check out more of Michael's work on his website below.</p>
           </div>
         </div>
         <div class="row">
@@ -66,18 +61,5 @@
         </div>
       </div>
     </section>
-
-    <!-- Bootstrap core JavaScript -->
-    <!--<script src="vendor/jquery/jquery.min.js"></script>-->
-    <!--<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
-
-    <!-- Plugin JavaScript -->
-    <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-    <!--<script src="vendor/scrollreveal/scrollreveal.min.js"></script>-->
-    <!--<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>-->
-
-    <!-- Custom scripts for this template -->
-    <!--<script src="js/creative.min.js"></script>-->
-
   </body>
 
