@@ -20,7 +20,7 @@
             <% }); %>     
         </div>
         <div>
-            <form action="/polls/<%= poll._id %>/newoption?_method=PUT" method="POST">
+            <form action="/polls/newoption/<%= poll._id %>?_method=PUT" method="POST">
                 <h3>New Option</h3>
                 <input type="text" name="newOption" placeholder="New Option">
                 <button>Submit</button>

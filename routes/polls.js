@@ -21,7 +21,6 @@ router.get('/new', middlewareObj.isLoggedIn, function(req, res){
 });
 // Post Route for New Poll
 router.post('/', middlewareObj.isLoggedIn, function(req, res){
-    
     var title = req.body.title,
         options = req.body.options;
     
@@ -57,7 +56,38 @@ router.get('/:id', function(req, res){
             res.render('../views/polls/show', {poll: poll, optionArray: JSON.stringify(optionArray), totalCount: totalCount, topAnswer: topAnswer});
         }
     })
-})
+});
+
+//Update options to add new option
+router.put('/newoption/:id', middlewareObj.isLoggedIn, function(req, res){
+    console.log('made it to the add a new option route');
+    var newOption;
+    var newOptionsArray;
+    Poll.findById(req.params.id, function(err, poll){
+        if (err) {
+            console.log('we made it to find id and update but theres an error, check below:')
+            console.log(err)
+        } else {
+            console.log('poll.options is ==== ' + poll.options )
+            newOptionsArray = poll.options;
+            console.log("options -------- " + newOptionsArray);
+            newOption = {
+                text: req.body.newOption,
+                count: 1
+            }
+            console.log("newOption -------- " + JSON.stringify(newOption));
+            newOptionsArray.push(newOption);
+            console.log('The new options after pushing ------- ' + newOptionsArray);
+        }
+        Poll.findByIdAndUpdate(req.params.id, {options: newOptionsArray}, function(err, updatedPoll){
+            if (err) {
+                console.log(err)
+            } else {
+                 res.redirect('/polls/' + req.params.id);    
+            }
+        });        
+    });
+});
 //Update route - increases option count by 1
 router.put('/:id', middlewareObj.isLoggedIn, function(req, res){
     var optionId = req.body.votedFor;
@@ -76,42 +106,14 @@ router.put('/:id', middlewareObj.isLoggedIn, function(req, res){
     }
     Poll.findByIdAndUpdate(req.params.id, {options: options}, function(err, updatedPoll){
         if (err) {
-            console.log('we made it to find id and update but theres an error, check below:')
             console.log(err);
         } else {
-             res.redirect('/polls');
+             res.redirect('/polls/' + req.params.id);
         }
     })
 })
 });
-//Update options to add new option
-router.put('/:id/newoption', middlewareObj.isLoggedIn, function(req, res){
-    console.log(req.body);
-    var newOption;
-    var options;
-    Poll.findById(req.params.id, function(err, poll){
-        if (err) {
-            console.log(err)
-        } else {
-            options = poll.options;
-            console.log("options -------- " + options);
-            newOption = {
-                text: req.body.newOption,
-                count: 1
-            }
-            console.log("newOption -------- " + JSON.stringify(newOption));
-            options.push(newOption);
-            console.log('The new options after pushing ------- ' + options);
-        }
-    })
-    Poll.findByIdAndUpdate(req.params.id, {options: options}, function(err, updatedPoll){
-        if (err) {
-            console.log(err)
-        } else {
-             res.redirect('/polls/' + req.params.id);    
-        }
-    });
-})
+
 
 
 
