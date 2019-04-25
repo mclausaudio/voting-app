@@ -16,9 +16,14 @@ Pollux is a full stack voting application that allows users create an account an
 ## Writing my own Middleware
 For this project, I wrote my own middleware functions check if a user is logged in in order to access certain routes.  By breaking this functionality out into a seperate reusable middleare function, I am able to quickly protect routes and reuse this function as the app grows.  I used PassportJS for auth, which comes with many handy functions for checking user data.
 
+![Middleware](middlewareFunc.png)
+
+![Middleware Routes](middlewareRoute.png)
+
 ## EJS Practice
 Although now a days I prefer building with React/Redux, this project gave me a lot of great experience building wiht the EJS templating language, which I also greatly enjoy!
 
+![EJS](ejs.png)
 
 
 
